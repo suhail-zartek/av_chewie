@@ -90,9 +90,11 @@ import AVFoundation
         }
     }//end method
     
-    func urlSession(_ session: URLSession, assetDownloadTask: AVAssetDownloadTask, didFinishDownloadingTo location: URL) {
-        print(location.relativePath)
-        self.channel?.invokeMethod("offlineDownloadLocation", arguments: location.relativePath)
+func urlSession(_ session: URLSession, assetDownloadTask: AVAssetDownloadTask, didFinishDownloadingTo location: URL) {
+        let baseUrl = URL(fileURLWithPath: NSHomeDirectory()) //app's home directory
+        let assetUrl = baseUrl.appendingPathComponent(location.relativePath)
+        print(assetUrl.path)
+        self.channel?.invokeMethod("offlineDownloadLocation", arguments: assetUrl.path)
         downloadSession?.finishTasksAndInvalidate()
     }
     

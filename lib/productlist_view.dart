@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:av_player/productcard_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductListView extends StatelessWidget {
   @override
@@ -34,6 +38,10 @@ class _ProductListLayoutState extends State<ProductListLayout> {
     return ListView.builder(
       itemCount: _videos.length,
       itemBuilder: (context, index) {
+        SharedPreferences.getInstance().then((value) async {
+          Directory dir=await getApplicationDocumentsDirectory();
+          print("jxnfjnsd "+dir.path+"/"+value.getString(_title[index]));
+        });
         return ProductCard(_title[index], _videos[index]);
       },
     );
